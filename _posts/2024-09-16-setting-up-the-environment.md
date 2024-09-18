@@ -21,7 +21,7 @@ As containers are big in space, we decided to share our [DcGC singularity recipe
 
 The easiest way to get started is to clone our scrnaseq2 repository to your local storage. 
 
-``` bash
+```bash
 # Clone git
 git clone git@github.com:dcgc-bfx/scrnaseq2.git
 ```

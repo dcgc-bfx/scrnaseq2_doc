@@ -5,7 +5,7 @@ categories: [Getting started]
 tags: [installation]
 ---
 
-# Required software
+# Step 1: Software containers
 
 To make our analyses as portable and reproducible as possible, we work with [singularity containers](https://sylabs.io/guides/3.0/user-guide/index.html). 
 
@@ -15,20 +15,24 @@ The container version is written into the workflow output. This way, we can late
 
 As containers are big in space, we decided to share our [DcGC singularity recipes](https://github.com/dcgc-bfx/singularity-single-cell). You can download the recipe and build the container on your own.
 
-# Download the scrnaseq2 code
+# Step 2: Download the scrnaseq2 code
 
-## Option 1: Fork the `scrnaseq2` repository
+## Option 1: Clone the scrnaseq2 repository
 
-## Option 2: Clone the `scrnaseq2` repository
+The easiest way to get started is to clone our scrnaseq2 repository to your local storage. 
 
-```
+``` bash
 # Clone git
 git clone git@github.com:dcgc-bfx/scrnaseq2.git
 ```
 
-# Run `scrnaseq2`
+## Option 2: Fork the scrnaseq2 repository
 
-## Option 1: Run with `RStudio`
+If you intend to contribute to the workflow, please first create your own fork of the GitHub repository. You can then clone your own fork, work with it, and once your code is finalized and working, you can create a pull request.
+
+# Run scrnaseq2
+
+## Option 1: Run with RStudio
 
 Start RStudio and associate a new project with this repository at *File* -\> *New* *Project* -\> *Existing* *Directory* and browse to the path of the git repository.
 

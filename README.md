@@ -6,6 +6,7 @@
 
 `scrnaseq2_doc` is the accompanying git repository including technical documentation on how to use `scrnaseq2`. 
 
+**Visit the resulting website here:**   
 https://dcgc-bfx.github.io/scrnaseq2_doc/
 
 ## Credits

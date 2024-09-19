@@ -21,7 +21,7 @@ This has the following advantages:
 - Different types of analyses are possible.
 - Modules that were already run do not need to be run again which saves significant time.
 - In the final HTML report, each module is a chapter and shown as a separate page. This makes the report more structured.
-- Each module is run as a separate R session which makes it cleaner and more memory efficient.
+- Each module is run as a separate `R` session which makes it cleaner and more memory efficient.
 - Each module has certain requirements to the input data that must be fulfilled. This allows for independent and parallel development.
 
 ## Directory structure
@@ -29,8 +29,8 @@ This has the following advantages:
 This is a first overview of the important directories and files of the `scrnaseq2` git repository:
 
 - `.gitignore`: Ignore file for git. Set up such that at first all files are ignored and then exceptions are made for the relevant files. This helps with all the temporary files created by `R` and `quarto`.
-- `R`: Contains files with user-defined R functions. Note that they still contain a number of old and not used functions.
-  - `collect_module_results.R`: R script that is run at the end of the analysis to collect all results that should be published to the user
+- `R`: Contains files with user-defined `R` functions. Note that they still contain a number of old and not used functions.
+  - `collect_module_results.R`: `R` script that is run at the end of the analysis to collect all results that should be published to the user
   - `functions_analysis.R`: Functions for the analysis of data
   - `functions_degs.R`: Functions for DEG analysis. Outdated and not used
   - `functions_io.R`: Functions for reading and writing data
@@ -49,8 +49,8 @@ This is a first overview of the important directories and files of the `scrnaseq
   - `references.bib`: Literature information in BibTex format for citing papers
   - `template.docx`: Template for publishing a analysis as Word document
 - `modules`: An analysis consists of different parts (e.g. pre-processing or normalization) that are called modules. Please see below for more information.
-- `references.qmd`: Quarto document for printing the bibliography of all references used in scrnaseq2
-- `scripts`: Contains `R` and `quarto` scripts which belong to scrnaseq2 and use parts it code. However, they are stand-alone/independent, and not part of the main analysis. They are typically run from the command line.
+- `references.qmd`: Quarto document for printing the bibliography of all references used in `scrnaseq2`
+- `scripts`: Contains `R` and `quarto` scripts which belong to `scrnaseq2` and use parts it code. However, they are stand-alone/independent, and not part of the main analysis. They are typically run from the command line.
 - `scrnaseq.Rproj`: RStudio project settings. User-specific. Ignored by git.
 
 ## How modules are chained into an analysis
@@ -104,7 +104,7 @@ All parameters in the section `general` will be applied to all modules but can b
 
 ## How an analysis is run
 
-During development, I would suggest to first run each module manually in RStudio.
+During development, I would suggest to first run each module manually in `RStudio`.
 
 Important is to always be in the project directory (since paths are relative to this directory). Use `Session` -> `Set Working Directory` -> `To Project Directory`. 
 
@@ -114,7 +114,7 @@ To render the document, either click the `Render` button directly, or `Build` ->
 
 There are two levels how module results are reused:
 
-- At the end of the `R` code of a module, the `Seurat` object is stored in the module directory. The next module loads it and in turn at the end saves a copy. This means that an analysis can be run step by step (and not in a full run anymore). It works both interactively (run code line by line in `RStudio`) and non-interactive (render via `quarto`).
+- At the end of the `R` code of a module, the `Seurat` object is stored in the module directory. The next module loads it and in turn at the end saves a copy. This means that an analysis can be run step by step (and not in a full run anymore). It works both interactively (run code line-by-line in `RStudio`) and non-interactively (render via `quarto`).
 
 - When a module is rendered by `quarto`, it will run the `R` code. The result is a markdown file (with text and tables) as well as the plots as PNGs. Quarto then converts these files into the final report. Now quarto can decide whether to run and render a module or reuse the existing content depending on the `freeze` setting. If in a module `freeze` is set to `yes`, then this module will not be run and rendered but its existing content (stored in the directory `_freeze`) will be included. If `freeze` is set to `auto`, then it will only be run and rendered if the module has changed. 
 
@@ -154,11 +154,11 @@ execute:
 
 The YAML header contains **defaults** for module-specific parameters. They can (and should be) overwritten in an external analysis-specific configuration file. The only two parameters that need to be defined are **module** (sets the name for the module) and **module_dir** (sets the directory of the module). These identify the module (how to know what module this is) and are required for all module-specific operations.
 
-The `freeze`setting in the YAML header tells quarto whether to render or freeze the document. If a document is frozen, quarto will always reuse the text and the pictures and will not run the R code.
+The `freeze`setting in the YAML header tells quarto whether to render or freeze the document. If a document is frozen, quarto will always reuse the text and the pictures and will not run the `R` code.
 
 #### Part 2: Setup chunk
 
-The setup chunk is special. When you are in a notebook mode, the chunk named setup will be run automatically once, before any other code is run. Therefore, avoid to do computations here and simply used it for general settings and libraries. Furthermore it is always labelled *setup*.
+The setup chunk is special. When you are in a notebook mode, the chunk named setup will be run automatically once, before any other code is run. Therefore, avoid to do computations here and simply used it for general settings and libraries. Furthermore it is always labelled `setup`.
 
 ```r
 #| label: setup
@@ -196,11 +196,11 @@ module_dir = params$module_dir
 plan(multisession, workers=4, gc=TRUE)
 ```
 
-- `QUARTO_PROFILE`: When running the code non-interactively (render), there is this environment variable containing the analysis profile name. With this, we know which of the yml configuration files to load. For example for the *default* workflow, this variable would contain the value *default* and therefore we load `_quarto-default.yml`. However when running the code interactively in RStudio (step by step), this is not set and we need to set it manually. This is still a bit hacky but I do not know another way...
-- Then we source all our functions. In addition, we source general configurations that apply to all R code. Have a look at this file - there are also a few fancy colour palettes...
+- `QUARTO_PROFILE`: When running the code non-interactively (render), there is this environment variable containing the analysis profile name. With this, we know which of the `yml` configuration files to load. For example, for scRNA-seq data, this variable would contain the value `scrnaseq` and therefore we load `_quarto-scrnaseq.yml`. However when running the code interactively in `RStudio` (step-by-step), this is not set and we need to set it manually. 
+- Then we source all our functions. In addition, we source general configurations that apply to all `R` code. Have a look at this file - there are also a few fancy colour palettes...
 - Then we load packages that need to explicitly loaded. In general, we try to include th package name in the function call though.
 - Next we get module name and directory.
-- Finally, we configure how parallelization should be done. This applies to all functions that use the *future* framework (which most packages incl `Seurat` do). Four cores is a conservative setting that can be changed depending on function and analysis. I have not had the time to find out...
+- Finally, we configure how parallelization should be done. This applies to all functions that use the `future` framework (which most packages incl `Seurat` do). Four cores is a conservative setting that can be changed depending on function and analysis. 
 
 #### Part 3: Preparation chunk
 
@@ -260,11 +260,11 @@ Seurat::DefaultAssay(sc) = default_assay
 ```
 
 - The first part creates (or cleans) two important sub-directories of the module directory:
-  - `results`: Contains all files that should be published to the user (tables). Once a report is generated, an R script will copy and organize all files from these directories.
+  - `results`: Contains all files that should be published to the user (tables). Once a report is generated, an `R` script will copy and organize all files from these directories.
   - `sc`: In this directory, the final `Seurat` object and associated files are saved for the next module.
 - Next, it will be determined which of the previous modules should be used as input. This can be set explicitly (`prev_module_dir`) or is determined by a function that reads the yaml configuration file of the current analysis profile.
 - Then the `Seurat` object is read into memory. If on-disk counts are used, then the `Seurat` object will contain the paths to the respective directories (which are in the same directory as the `Seurat` object).
-- If on-disk counts are used, performance is better if the counts directories are on a local SSD storage than on a standard disk-based server. They will be copied to a temp directory (e.g. `/tmp/Rxsbfhs` ) and the `Seurat` object will be updated. **Problem**: Currently the temp directory is deleted when the R session exists or maybe suspends?
+- If on-disk counts are used, performance is better if the counts directories are on a local SSD storage than on a standard disk-based server. They will be copied to a temp directory (e.g. `/tmp/Rxsbfhs` ) and the `Seurat` object will be updated. **Problem**: Currently the temp directory is deleted when the `R` session exists or maybe suspends?
 - Finally, the default assay (data type) will be set. For all `Seurat` functions, it is then not necessary anymore to explicitly specify the assay.
 
 #### Part 4: Analysis code

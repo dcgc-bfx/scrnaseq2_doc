@@ -1,4 +1,4 @@
-# <p align="center"> <img src="docs/scrnaseq2_cover.png" alt="scrnaseq2" height="500"> </p>
+# <p align="center"> <img src="assets/img/scrnaseq2_cover.png" alt="scrnaseq2" height="500"> </p>
 
 ## Introduction
 

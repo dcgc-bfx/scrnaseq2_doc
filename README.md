@@ -1,13 +1,10 @@
-# <p align="center"> <img src="assets/img/scrnaseq2_cover.png" alt="scrnaseq2" height="500"> </p>
-
 ## Introduction
 
-[`scrnaseq2`](https://github.com/dcgc-bfx/scrnaseq2) is a bioinformatics workflow to analyze single-cell data. 
+[**scrnaseq2**](https://github.com/dcgc-bfx/scrnaseq2) is a bioinformatics workflow to analyze single-cell data. 
 
-`scrnaseq2_doc` is the accompanying git repository including technical documentation on how to use `scrnaseq2`. 
+**scrnaseq2_doc** is the accompanying git repository including technical documentation on how to use `scrnaseq2`. 
 
-**Visit the resulting website here:**   
-https://dcgc-bfx.github.io/scrnaseq2_doc/
+**Visit the resulting website here:** https://dcgc-bfx.github.io/scrnaseq2_doc/
 
 ## Credits
 
@@ -19,4 +16,4 @@ If you would like to contribute to this documentation, please first create your 
 
 ## Citation
 
-If you used `scrnaseq2` to analyze your data, please cite it by mentioning the DRESDEN-concept Genome Center URL "https://genomecenter.tu-dresden.de". 
+If you used **scrnaseq2** to analyze your data, please cite it by mentioning the DRESDEN-concept Genome Center URL "https://genomecenter.tu-dresden.de". 

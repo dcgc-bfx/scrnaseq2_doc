@@ -7,12 +7,12 @@ tags: [code, modules]
 
 ## The concept of modules
 
-An analysis can be split into individual parts (pre-processing, normalization, etc.). 
+We have split the analysis into individual parts: pre-processing, normalization, etc. 
 
-We have structured these parts into separate modules whithin the `scrnaseq2` git repository. The core concept is:
+We have structured these parts into separate modules within the `scrnaseq2` git repository. The core concept is:
 
 - Modules read some input, do an analysis, and store the output for the next modules.
-- For the same analysis part, there can be different modules depending on the kinds of data, e.g. normalization for RNA-seq data and normalization for ATAC-seq data.
+- For the same analysis part, there can be different modules depending on the kind of data, e.g. normalization for RNA-seq data and normalization for ATAC-seq data.
 - Modules can be chained into an analysis.
 - Modules can be run with parameters.
 
@@ -43,14 +43,14 @@ This is a first overview of the important directories and files of the `scrnaseq
 - `css`: CSS style sheets for HTML.
 - `datasets`: Location for datasets to analyze. There are already a number of test datasets (that need to be downloaded first). In addition, there are Excel configuration files for loading the datasets.
 - `docs`: Further documentation to be shown on the GitHub page
-- `index.qmd`: Starting page for each report. It should contain relevant information about the biological experiment, the reearch questions and TODOs. It also contains brief information about `scrnaseq2` and how to cite the repository.
+- `index.qmd`: Starting page for each report. It should contain relevant information about the biological experiment, the research questions and TODOs. It also contains brief information about `scrnaseq2` and how to cite the repository.
 - `misc`: Contains various files that cannot be put in another directory.
   - `nature.csl`: Citation style format (currently Nature)
   - `references.bib`: Literature information in BibTex format for citing papers
   - `template.docx`: Template for publishing a analysis as Word document
 - `modules`: An analysis consists of different parts (e.g. pre-processing or normalization) that are called modules. Please see below for more information.
 - `references.qmd`: Quarto document for printing the bibliography of all references used in `scrnaseq2`
-- `scripts`: Contains `R` and `quarto` scripts which belong to `scrnaseq2` and use parts it code. However, they are stand-alone/independent, and not part of the main analysis. They are typically run from the command line.
+- `scripts`: Contains `R` and `quarto` scripts which belong to `scrnaseq2` and use parts of the code. However, they are stand-alone/independent, and not part of the main analysis. They are typically run from the command line.
 - `scrnaseq.Rproj`: RStudio project settings. User-specific. Ignored by git.
 
 ## How modules are chained into an analysis
@@ -158,7 +158,7 @@ The `freeze`setting in the YAML header tells quarto whether to render or freeze 
 
 #### Part 2: Setup chunk
 
-The setup chunk is special. When you are in a notebook mode, the chunk named setup will be run automatically once, before any other code is run. Therefore, avoid to do computations here and simply used it for general settings and libraries. Furthermore it is always labelled `setup`.
+The setup chunk is special. When you are in a notebook mode, the chunk named setup will be run automatically once, before any other code is run. Therefore, avoid to do computations here and simply use it for general settings and libraries. Furthermore it is always labelled `setup`.
 
 ```r
 #| label: setup
@@ -198,7 +198,7 @@ plan(multisession, workers=4, gc=TRUE)
 
 - `QUARTO_PROFILE`: When running the code non-interactively (render), there is this environment variable containing the analysis profile name. With this, we know which of the `yml` configuration files to load. For example, for scRNA-seq data, this variable would contain the value `scrnaseq` and therefore we load `_quarto-scrnaseq.yml`. However when running the code interactively in `RStudio` (step-by-step), this is not set and we need to set it manually. 
 - Then we source all our functions. In addition, we source general configurations that apply to all `R` code. Have a look at this file - there are also a few fancy colour palettes...
-- Then we load packages that need to explicitly loaded. In general, we try to include th package name in the function call though.
+- Then we load packages that need to be explicitly loaded. In general, we try to include th package name in the function call though.
 - Next we get module name and directory.
 - Finally, we configure how parallelization should be done. This applies to all functions that use the `future` framework (which most packages incl `Seurat` do). Four cores is a conservative setting that can be changed depending on function and analysis. 
 
@@ -264,7 +264,7 @@ Seurat::DefaultAssay(sc) = default_assay
   - `sc`: In this directory, the final `Seurat` object and associated files are saved for the next module.
 - Next, it will be determined which of the previous modules should be used as input. This can be set explicitly (`prev_module_dir`) or is determined by a function that reads the yaml configuration file of the current analysis profile.
 - Then the `Seurat` object is read into memory. If on-disk counts are used, then the `Seurat` object will contain the paths to the respective directories (which are in the same directory as the `Seurat` object).
-- If on-disk counts are used, performance is better if the counts directories are on a local SSD storage than on a standard disk-based server. They will be copied to a temp directory (e.g. `/tmp/Rxsbfhs` ) and the `Seurat` object will be updated. **Problem**: Currently the temp directory is deleted when the `R` session exists or maybe suspends?
+- If on-disk counts are used, performance is better if the counts directories are on a local SSD storage than on a standard disk-based server. They will be copied to a temp directory (e.g. `/tmp/Rxsbfhs` ) and the `Seurat` object will be updated. **Why is this a problem?**: Currently the temp directory is deleted when the `R` session exists or maybe suspends?
 - Finally, the default assay (data type) will be set. For all `Seurat` functions, it is then not necessary anymore to explicitly specify the assay.
 
 #### Part 4: Analysis code
